@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  frontend:
+    build:
+      target: production
+    env_file:
+      - ../ServiceAppFrontend/env/frontend.dev
+    ports:
+      - '4200:4200'

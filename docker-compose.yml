@@ -1,13 +1,9 @@
 version: "3.8"
 services:
   frontend:
+    image: clausholmgaard/service-app-frontend
     build:
       context: ../ServiceAppFrontend
-      dockerfile: dockerfiles/Dockerfile.prod
+      dockerfile: Dockerfile
     env_file:
-      - ./env/frontend.env
-    volumes:
-      - ../ServiceAppFrontend/service-app-web:/app
-      - /app/node_modules
-    ports:
-      - '4200:4200'
+      - ../ServiceAppFrontend/env/frontend.all
