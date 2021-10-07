@@ -1,2 +1,32 @@
-docker compose -f docker-compose.yml -f docker-compose.dev.yml build
-docker compose -f docker-compose.yml -f docker-compose.dev.yml up
+#!/bin/bash
+
+services=(
+    ServiceAppFrontend
+    ServiceAppBackend
+    )
+
+compose_command=(docker compose)
+
+echo "" > .env
+
+for s in "${services[@]}"
+do
+    service_string="$s=../$s"
+    echo $service_string >> .env
+
+    compose_command+=(-f ../${s}/docker-compose.yml -f ../${s}/docker-compose.dev.yml)
+done
+
+compose_command+=(--env-file ./.env config)
+eval "${compose_command[@]}" > docker-compose.yml
+
+#compose_command+=(--env-file ./.env config "|" docker compose -f -)
+
+#build_command=(${compose_command[@]} build)
+#run_command=(${compose_command[@]} up)
+
+#echo Executing ${build_command[@]}
+#eval "${build_command[@]}"
+
+#echo Executing ${run_command[@]}
+#eval "${run_command[@]}"
