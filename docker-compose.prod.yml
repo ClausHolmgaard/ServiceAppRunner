@@ -1,5 +1,12 @@
 version: "3.8"
 services:
+  backend:
+    build:
+      target: production
+    env_file:
+      - ../ServiceAppBackend/env/backend.dev
+    ports:
+      - '3000:3000'
   frontend:
     build:
       target: production
