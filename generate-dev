@@ -1,0 +1,21 @@
+#!/bin/bash
+
+services=(
+    ServiceAppFrontend
+    ServiceAppBackend
+    )
+
+compose_command=(docker compose)
+
+echo "" > .env
+
+for s in "${services[@]}"
+do
+    service_string="$s=../$s"
+    echo $service_string >> .env
+
+    compose_command+=(-f ../${s}/docker-compose.yml -f ../${s}/docker-compose.local.yml)
+done
+
+compose_command+=(--env-file ./.env config)
+eval "${compose_command[@]}" > docker-compose.yml
